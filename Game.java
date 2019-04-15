@@ -18,14 +18,11 @@ import java.awt.Font;
 /**
    To jest klasa gry , głowna klasa zawierająca maina()
 */
+
+
 public class Game extends Canvas implements Runnable {
 
-  /**
-  Default Size of a Window of a Window
-  */
-  public static final int WidthOfWindow = 1280, HeightOfWindow = 720;
-
-  /**
+   /**
   *Variables of GameStart and GameClo
   */
   private Thread thread;
@@ -37,6 +34,12 @@ public class Game extends Canvas implements Runnable {
   private Handler handler;
   private Random r;
   private Menu menu;
+
+  /**
+  *Zmienne niezbędne do wczytywania danych z pliku
+  */
+  ReaderFromFile FileReader = new ReaderFromFile();
+  ParameterContainer Container = new ParameterContainer();
 
   /**
   * To jest miejsce gdzie przechowywujemy informacje o stanie naszej gry
@@ -51,23 +54,32 @@ public class Game extends Canvas implements Runnable {
 
   public STATE gameState = STATE.Menu;
 
+
+
   /**
-  Ta metoda tworzy okno gry , korzysta z klasy Window , metoda nie przyjmuje argumentów przy wywołaniu
+  Ta metoda tworzy okno gry , korzysta z klasy WindowGenerator , metoda nie przyjmuje argumentów przy wywołaniu
   */
+
   public Game() {
-
+    Container = FileReader.load();
     handler = new Handler();
-
-    new Window(WidthOfWindow,HeightOfWindow,"Tutaj wstawić zmienną TitleOfTheGame",this);
+    new WindowGenerator(Container.getWidthOfWindow(),Container.getHeightOfWindow(),Container.getTitleOfTheGame(),this);
     menu = new Menu();
-    if(gameState == STATE.Game)
+
+    if(gameState == STATE.Menu)
     {
+
       r = new Random();
-      for(int i=0; i<50;i++) {
+      for(int i=0; i<2;i++) {
         handler.addObject(new Square(0,0,i)) ;
+        handler.addObject(new Circle(10,10,i));
+        handler.addObject(new Triangle(10,10,i));
       }
+
     }
+
   }
+
 
   /**
   *Metoda która uruchamia grę
@@ -77,6 +89,8 @@ public class Game extends Canvas implements Runnable {
     thread.start();
     running = true;
   }
+
+
 
   /**
   *Metoda, która odpowiada za wyłączenie gry
@@ -89,6 +103,7 @@ public class Game extends Canvas implements Runnable {
         StopProblem.printStackTrace();
       }
   }
+
 
   /**
   *Główna pętla gry , Game Loop from MineCraft , created probably by Notch ... DONE
@@ -120,10 +135,7 @@ public class Game extends Canvas implements Runnable {
     stop();
   }
 
-  /**
-  * W tym ifie pojawią się pewne metody, lecz w momencie oddawania Etapu 2
-  * owych funkcjonalności jeszcze nie ma ale pozostawiam ifa aby pamiętać ,że należy tutaj do niego wrócić ...
-  */
+
   private void tick() {
     handler.tick();
 
@@ -134,6 +146,9 @@ public class Game extends Canvas implements Runnable {
   }
 
 
+  /**
+  * Metoda render(), która korzysta z BufferStrategy ,
+  */
   private void render() {
     BufferStrategy Var_BufferStrategy = this.getBufferStrategy();
     if(Var_BufferStrategy==null){
@@ -142,18 +157,20 @@ public class Game extends Canvas implements Runnable {
     }
     Graphics g = Var_BufferStrategy.getDrawGraphics();
     g.setColor(Color.green);
-    g.fillRect(0,0,WidthOfWindow,HeightOfWindow);
+    g.fillRect(0,0,Container.getWidthOfWindow(),Container.getHeightOfWindow());
 
     handler.render(g);
 
-
     if(gameState == STATE.Game){}
       else if(gameState == STATE.Menu) {
-        menu.render(g);
+        menu.render(g,Container.getHeightOfWindow(),Container.getWidthOfWindow());
       }
     g.dispose();
     Var_BufferStrategy.show();
   }
+
+
+
 
   public static void main(String args[]) {
     new Game();

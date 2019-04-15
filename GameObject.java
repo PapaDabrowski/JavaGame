@@ -1,5 +1,12 @@
 import java.awt.Graphics;
 
+ /** Jest to klasa która po której tak naprawdę 
+ * będą dziedziczyć inne obiekty , natomiast sama w sobie
+ * klasa nie będzie wykorzystywana jako Obiekt.
+ * @author PapaDabrowski
+ * @version 15:20 08.04.2019
+ */
+
 public abstract class GameObject {
 
   protected int X_position,Y_position;

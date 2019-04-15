@@ -33,6 +33,11 @@ public class ReaderFromFile {
        pin.wypiszKomunikatyIZakończ("Nie udało się odczytać pliku","par.txt",IOE);
      }
 
+
+    /**
+    * Inicjalizacja zmiennych
+    */
+
     int Background_Colour[]= new int[3];
     String FileOfBackground = "";
     String Graphics_Object = "";
@@ -52,6 +57,13 @@ public class ReaderFromFile {
     int File_HeightOfWindow= Integer.parseInt(pr.getProperty("początkowaWysokośćPlanszy"));
     double SizeProcentage = Double.parseDouble(pr.getProperty("początkowaSzerokośćObiektuGryJakoProcentPoczątkowejSzerokościPlanszy"));
     String Background = pr.getProperty("tło");
+
+    /**
+    * Wszystkie sprawdzenia wynikają z różnych przypadków
+    * które może wygenerować generator parametrów. Aby być przygotowanym
+    * na wszystkie ewentualności należy zabezpieczyć się ifami itd.
+    * ponieważ ich brak będzie skutkował niepoprawnym działaniem programu
+    */
 
     if(Background.equals("plikGraficzny"))
              FileOfBackground= pr.getProperty("plikTła");
@@ -75,29 +87,48 @@ public class ReaderFromFile {
     int Hitpoints = Integer.parseInt(pr.getProperty("HitPoints"));
     int AmountOfScores = Integer.parseInt(pr.getProperty("LiczbaWynikow"));
 
-    if(Background.equals("jednolite") && Graphics_Object.equals("figuraObiektuGry")) {
+
+    /**
+    *Tutaj mamy doczynienia z ifami ,które odpowiednio dopasowywują dane
+    *do odpowiednich przeciążonych konstruktorów klasy ParameterContainer.
+    */
+
+    if(Background.equals("jednolite") && Graphics_Object.equals("figuraObiektuGry"))
+    {
       temp = new ParameterContainer(TitleOfTheGame,AmountOfLevels,NoIdeaWTFREAKitIS,FirstLevelVar,NoIdeaWTFREAKitIS2,
                                                        LevelsOfDifficulty,Difficulty,File_HeightOfWindow,File_WidthOfWindow,SizeProcentage,
                                                        Background,Graphics_Object,AmountOfScores,Hitpoints,Background_Colour,ShapeOfObject);
     }
-    else if(Background.equals("jednolite") && Graphics_Object.equals("plikGraficzny")) {
+    else if(Background.equals("jednolite") && Graphics_Object.equals("plikGraficzny"))
+    {
       temp = new ParameterContainer(TitleOfTheGame,AmountOfLevels,NoIdeaWTFREAKitIS,FirstLevelVar,NoIdeaWTFREAKitIS2,
                                                        LevelsOfDifficulty,Difficulty,File_HeightOfWindow,File_WidthOfWindow,SizeProcentage,
                                                        Background,Graphics_Object,AmountOfScores,Hitpoints,Background_Colour,FileOfObject);
     }
-    else if(Background.equals("plikGraficzny") && Graphics_Object.equals("figuraObiektuGry")) {
+    else if(Background.equals("plikGraficzny") && Graphics_Object.equals("figuraObiektuGry"))
+    {
       temp = new ParameterContainer(TitleOfTheGame,AmountOfLevels,NoIdeaWTFREAKitIS,FirstLevelVar,NoIdeaWTFREAKitIS2,
                                                        LevelsOfDifficulty,Difficulty,File_HeightOfWindow,File_WidthOfWindow,SizeProcentage,
                                                        Background,Graphics_Object,AmountOfScores,Hitpoints,FileOfBackground,ShapeOfObject);
     }
-    else{
+    else
+    {
       temp = new ParameterContainer(TitleOfTheGame,AmountOfLevels,NoIdeaWTFREAKitIS,FirstLevelVar,NoIdeaWTFREAKitIS2,
                                                        LevelsOfDifficulty,Difficulty,File_HeightOfWindow,File_WidthOfWindow,SizeProcentage,
                                                        Background,Graphics_Object,AmountOfScores,Hitpoints,FileOfBackground,FileOfObject);
     }
-
     return temp;
   }
+
+
+
+  /**
+  *Ten Main tutaj jest tak naprawdę tylko po to aby można było sprawdzić czy
+  *wszystko działa poprawnie w działaniu metod ReaderFromFile'a i czy zwraca
+  *Poprawnie obiekt typu ParameterContainer i ten obiekt uda nam się przechwycić
+  * i wyłuskać z niego kluczowe dla nas dane. Ten main tak naprawdę jeśli zostawimy go
+  * tutaj nie będzie sprawiał żadnych problemów
+  */
 
 
   public static void main(String[] args) {
@@ -105,5 +136,6 @@ public class ReaderFromFile {
      ParameterContainer Container = new ParameterContainer();
      Container = ReaderInstance.load();
      System.out.println(Container.getDifficulty());
-  }
+     }
+
 }

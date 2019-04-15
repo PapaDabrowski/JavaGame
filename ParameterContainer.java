@@ -24,8 +24,8 @@ class ParameterContainer {
   private String NoIdeaWTFREAKitIS2;// nazwa  rozszerzenie pliku z opisem poziomu
   private int LevelsOfDifficulty;
   private int Difficulty;
-  private int File_HeightOfWindow;
-  private int File_WidthOfWindow;
+  private int HeightOfWindow;
+  private int WidthOfWindow;
   private double SizeProcentage;
   private String Background;
   private int Background_Colour[];
@@ -50,8 +50,8 @@ class ParameterContainer {
     this.NoIdeaWTFREAKitIS2 = "";
     this.LevelsOfDifficulty = -1;
     this.Difficulty = -1;
-    this.File_HeightOfWindow = -1;
-    this.File_WidthOfWindow = -1;
+    this.HeightOfWindow = -1;
+    this.WidthOfWindow = -1;
     this.SizeProcentage = -1;
     this.Background = "";
     this.Graphics_Object = "";
@@ -65,7 +65,7 @@ class ParameterContainer {
   *zaoszczędzić pamięć
   */
   ParameterContainer(String TitleOfTheGame,int AmountOfLevels, String NoIdeaWTFREAKitIS,int FirstLevelVar,
-                        String NoIdeaWTFREAKitIS2,int LevelsOfDifficulty,int Difficulty,int File_HeightOfWindow,int File_WidthOfWindow,
+                        String NoIdeaWTFREAKitIS2,int LevelsOfDifficulty,int Difficulty,int HeightOfWindow,int WidthOfWindow,
                         double SizeProcentage, String Background, String Graphics_Object, int AmountOfScores, int Hitpoints,String FileOfBackground,String ShapeOfObject_OR_FileOfObject) {
 
                           this.TitleOfTheGame = TitleOfTheGame;
@@ -75,27 +75,30 @@ class ParameterContainer {
                           this.NoIdeaWTFREAKitIS2 = NoIdeaWTFREAKitIS2;
                           this.LevelsOfDifficulty = LevelsOfDifficulty;
                           this.Difficulty = Difficulty;
-                          this.File_HeightOfWindow = File_HeightOfWindow;
-                          this.File_WidthOfWindow = File_WidthOfWindow;
+                          this.HeightOfWindow= HeightOfWindow;
+                          this.WidthOfWindow= WidthOfWindow;
                           this.SizeProcentage = SizeProcentage;
                           this.Background = Background;
                           this.Graphics_Object = Graphics_Object;
                           this.AmountOfScores = AmountOfScores;
                           this.Hitpoints = Hitpoints;
                           this.FileOfBackground = FileOfBackground;
-                          this.ShapeOfObject = ShapeOfObject_OR_FileOfObject;
-                          this.FileOfObject = ShapeOfObject_OR_FileOfObject;
                           this.Color=false;
+
+                          if(Graphics_Object.equals("figuraObiektuGry")) {
+                            this.ShapeOfObject = ShapeOfObject_OR_FileOfObject;
+                          }
+                          else this.FileOfObject = ShapeOfObject_OR_FileOfObject;
 
                         }
 
   /**
   *Konstruktor Parametryczny , wykorzystywany w sytuacji gdy przyjmujemy
-  *jako tło plik , wtedy wykorzystujemy ten typ Konstruktora , przeciążenie konstruktora pozwala
-  *zaoszczędzić pamięć
+  *jako tło jednolity kolor, wtedy wykorzystujemy ten typ Konstruktora , przeciążenie konstruktora pozwala
+  *zaoszczędzić pamięć , i inaczej korzystać z kontenera w innych miejscach kodu
   */
   ParameterContainer(String TitleOfTheGame,int AmountOfLevels, String NoIdeaWTFREAKitIS,int FirstLevelVar,
-                        String NoIdeaWTFREAKitIS2,int LevelsOfDifficulty,int Difficulty,int File_HeightOfWindow,int File_WidthOfWindow,
+                        String NoIdeaWTFREAKitIS2,int LevelsOfDifficulty,int Difficulty,int HeightOfWindow,int WidthOfWindow,
                         double SizeProcentage, String Background, String Graphics_Object, int AmountOfScores, int Hitpoints,int[] Background_Colour,String ShapeOfObject_OR_FileOfObject) {
 
                           this.TitleOfTheGame = TitleOfTheGame;
@@ -105,20 +108,30 @@ class ParameterContainer {
                           this.NoIdeaWTFREAKitIS2 = NoIdeaWTFREAKitIS2;
                           this.LevelsOfDifficulty = LevelsOfDifficulty;
                           this.Difficulty = Difficulty;
-                          this.File_HeightOfWindow = File_HeightOfWindow;
-                          this.File_WidthOfWindow = File_WidthOfWindow;
+                          this.HeightOfWindow = HeightOfWindow;
+                          this.WidthOfWindow= WidthOfWindow;
                           this.SizeProcentage = SizeProcentage;
                           this.Background = Background;
                           this.Graphics_Object = Graphics_Object;
                           this.AmountOfScores = AmountOfScores;
                           this.Hitpoints = Hitpoints;
                           this.Background_Colour = Background_Colour;
-                          this.ShapeOfObject = ShapeOfObject_OR_FileOfObject;
-                          this.FileOfObject = ShapeOfObject_OR_FileOfObject;
                           this.Color=true;
+
+                          if(Graphics_Object.equals("figuraObiektuGry")) {
+                            this.ShapeOfObject = ShapeOfObject_OR_FileOfObject;
+                          }
+                          else this.FileOfObject = ShapeOfObject_OR_FileOfObject;
 
                         }
 
+  public void setHeightofWindow(int Height) {
+    this.HeightOfWindow= Height;
+  }
+
+  public void setWidthofWindow(int Width) {
+    this.WidthOfWindow = Width;
+  }
 
   String getTitleOfTheGame() {
     return TitleOfTheGame;
@@ -148,12 +161,12 @@ class ParameterContainer {
     return Difficulty;
   }
 
-  int getFile_HeightOfWindow() {
-    return File_HeightOfWindow;
+  int getHeightOfWindow() {
+    return HeightOfWindow;
   }
 
-  int getFile_WidthOfWindow() {
-    return File_WidthOfWindow;
+  int getWidthOfWindow() {
+    return WidthOfWindow;
   }
 
   double getSizeProcentage() {

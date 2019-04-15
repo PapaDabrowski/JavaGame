@@ -4,7 +4,7 @@
 # Plik nalezy wczytać do obiektu java.util.Properties metodą load() tej klasy
 # wg wzoru w programie generatora plików parametrycznych.
 #
-nazwaGry=Shooter [pin: 7077, autorzy: Dominik Kobus i Piotr Dabrowski]
+nazwaGry=Strzelanka [pin: 7077, autorzy: Dominik Kobus i Piotr Dabrowski]
 # Nazwa gry powinna wyświetlac się gdzieś na planszy albo w tytule okna.
 #
 # 1. Poziomy gry i pliki opisujące poziom gry. Zawartośc pliku opisującego poziom
@@ -19,33 +19,33 @@ rozszerzeniePlikuZOpisemPoziomu=props
 #
 # 2. Stopnie trudności
 #
-liczbaStopniTrudności=2
+liczbaStopniTrudności=4
 # dodatnia liczba całkowita
-zmianaStopniaTrudności=37
+zmianaStopniaTrudności=22
 # liczba całkowita w zakresie 20..45 - o tyle procent zwiększają się i/lub zmniejszają
 # się parametry wpływające na stopień trudności np. prędkość, czas, liczba punktów do zdobycia itp.
 #
 # 3. Różne wymiary
 #
-początkowaSzerokośćPlanszy=725
-początkowaWysokośćPlanszy=254
-początkowaSzerokośćObiektuGryJakoProcentPoczątkowejSzerokościPlanszy=5.429909
+początkowaSzerokośćPlanszy=846
+początkowaWysokośćPlanszy=653
+początkowaSzerokośćObiektuGryJakoProcentPoczątkowejSzerokościPlanszy=6.7667484
 #
 # 4. Rysowanie tła i obiektów, do których się strzela
 #
-tło=jednolite
-kolorTła=157 4 43
-# składowe R G B koloru tła, każda w zakresie 0..255
-obiektyGry=plikGraficzny
-plikObiektu=plikObiektu.jpeg
-# w ogólności tu można wstawić (względną!) ścieżkę do własnego pliku z obiektem graficznym
+tło=plikGraficzny
+plikTła=plik.jpeg
+# w ogólności tu można wstawić (względną!) ścieżkę do własnego pliku tła
+obiektyGry=figuryGeometryczne
+figuraObiektuGry=prostokąty
+# jedno z: kwadraty prostokąty trójkąty kółka
 #
 #
 # 5.Wytrzymałość obiektów w sensie HP
-HitPoints =66
+HitPoints =105
 #
 #
 #
 # 6.Liczba wyświetlanych wyników w tabeli wyników
-LiczbaWynikow =45
+LiczbaWynikow =39
 #
