@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
- /** Jest to klasa która po której tak naprawdę 
+ /** Jest to klasa która po której tak naprawdę
  * będą dziedziczyć inne obiekty , natomiast sama w sobie
  * klasa nie będzie wykorzystywana jako Obiekt.
  * @author PapaDabrowski
@@ -9,11 +9,11 @@ import java.awt.Graphics;
 
 public abstract class GameObject {
 
-  protected int X_position,Y_position;
-  protected int X_Velocity,Y_Velocity;
-  protected int ID;
+  int X_position,Y_position;
+  int X_Velocity,Y_Velocity;
+  ID ID;
 
-  public GameObject(int X_position,int Y_position,int ID) {
+  public GameObject(int X_position,int Y_position,ID ID) {
     this.X_position=X_position;
     this.Y_position=Y_position;
     this.ID=ID;
@@ -38,11 +38,11 @@ public abstract class GameObject {
     return Y_position;
   }
 
-  public void setID(int ID) {
+  public void setID(ID ID) {
     this.ID=ID;
   }
 
-  public int getID() {
+  public ID getID() {
     return ID;
   }
 

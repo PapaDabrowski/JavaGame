@@ -13,7 +13,16 @@ import java.io.Reader;
 import java.util.Properties;
 import java.util.Random;
 import java.awt.Font;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 /**
    To jest klasa gry , głowna klasa zawierająca maina()
@@ -34,6 +43,14 @@ public class Game extends Canvas implements Runnable {
   private Handler handler;
   private Random r;
   private Menu menu;
+  public HUD hud;
+
+  /**
+  * Zmienne potrzebne do obsługi wartości podawanych do hud
+  */
+  private int Game_Max_Ammo;
+  private int Game_Ammo;
+  public WEAPON choosedWeapon = WEAPON.M4A4;  // domyślna wartość poprostu nie ma to znaczenia co tutaj ustawimy
 
   /**
   *Zmienne niezbędne do wczytywania danych z pliku
@@ -47,12 +64,10 @@ public class Game extends Canvas implements Runnable {
   * Zrozumieć go , niż w przypadku kiedy zamiast stanów w formie enum
   * korzystalibyśmy ze stanów w formie int -> 1-Menu , 2-Game ....
   */
-  public enum STATE {
-    Menu,
-    Game
-  };
 
-  public STATE gameState = STATE.Menu;
+
+  public STATE gameState = STATE.Menu; //domyślna wartość STATE
+
 
 
 
@@ -61,24 +76,18 @@ public class Game extends Canvas implements Runnable {
   */
 
   public Game() {
+
     Container = FileReader.load();
     handler = new Handler();
+    hud = new HUD();
+    menu = new Menu(this,handler,Container);
+    this.addKeyListener(new KeyInput(handler));
+    this.addMouseListener(menu);
     new WindowGenerator(Container.getWidthOfWindow(),Container.getHeightOfWindow(),Container.getTitleOfTheGame(),this);
-    menu = new Menu();
-
-    if(gameState == STATE.Menu)
-    {
-
-      r = new Random();
-      for(int i=0; i<2;i++) {
-        handler.addObject(new Square(0,0,i)) ;
-        handler.addObject(new Circle(10,10,i));
-        handler.addObject(new Triangle(10,10,i));
-      }
-
-    }
 
   }
+
+
 
 
   /**
@@ -88,27 +97,28 @@ public class Game extends Canvas implements Runnable {
     thread = new Thread(this);
     thread.start();
     running = true;
-  }
-
-
+    }
 
   /**
   *Metoda, która odpowiada za wyłączenie gry
   */
   public synchronized void stop() {
-    try {
+    try
+    {
       thread.join();
       running = false;
-      }catch(Exception StopProblem) {
-        StopProblem.printStackTrace();
-      }
+    }
+    catch(Exception StopProblem)
+    {
+      StopProblem.printStackTrace();
+    }
   }
-
 
   /**
   *Główna pętla gry , Game Loop from MineCraft , created probably by Notch ... DONE
   */
-  public void run(){
+  public void run() {
+
     long lastTime = System.nanoTime();
     double amountOfTricks = 60.0;
     double ns = 1000000000 /amountOfTricks;
@@ -135,41 +145,55 @@ public class Game extends Canvas implements Runnable {
     stop();
   }
 
+ private void tick() {
 
-  private void tick() {
-    handler.tick();
+handler.tick();
 
-    if(gameState == STATE.Game){}
-      else if(gameState == STATE.Menu) {
-        menu.tick();
-      }
-  }
+    if(gameState == STATE.Game)
+    {
+      hud.tick();
+    }
+    else if(gameState == STATE.Menu || gameState == STATE.WeaponSelect || gameState == STATE.Help)
+    {
+      menu.tick();
+    }
+ }
 
 
   /**
   * Metoda render(), która korzysta z BufferStrategy ,
   */
   private void render() {
+    this.requestFocus();
     BufferStrategy Var_BufferStrategy = this.getBufferStrategy();
     if(Var_BufferStrategy==null){
       this.createBufferStrategy(3); //This is how much buffers are created in Game
       return;
     }
     Graphics g = Var_BufferStrategy.getDrawGraphics();
-    g.setColor(Color.green);
-    g.fillRect(0,0,Container.getWidthOfWindow(),Container.getHeightOfWindow());
+
+    Image img = Toolkit.getDefaultToolkit().createImage("background.jpg");
+    if(gameState == STATE.Game) {
+      g.setColor(Color.black);
+      g.fillRect(0,0,Container.getWidthOfWindow(),Container.getHeightOfWindow());
+      }
+    else if(gameState == STATE.Menu || gameState == STATE.WeaponSelect || gameState == STATE.Help) {
+      g.drawImage(img, 0, 0,Container.getWidthOfWindow(),Container.getHeightOfWindow(),null);
+    }
 
     handler.render(g);
 
-    if(gameState == STATE.Game){}
-      else if(gameState == STATE.Menu) {
-        menu.render(g,Container.getHeightOfWindow(),Container.getWidthOfWindow());
-      }
+    if(gameState == STATE.Game)
+    {
+      hud.render(g,Container.getHeightOfWindow(),Container.getWidthOfWindow(),menu.getAmmo(),menu.getMaxAmmo());
+    }
+    else if(gameState == STATE.Menu || gameState == STATE.WeaponSelect || gameState == STATE.Help)
+    {
+      menu.render(g,Container.getHeightOfWindow(),Container.getWidthOfWindow());
+    }
     g.dispose();
     Var_BufferStrategy.show();
   }
-
-
 
 
   public static void main(String args[]) {

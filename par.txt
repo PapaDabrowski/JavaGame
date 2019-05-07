@@ -4,7 +4,7 @@
 # Plik nalezy wczytać do obiektu java.util.Properties metodą load() tej klasy
 # wg wzoru w programie generatora plików parametrycznych.
 #
-nazwaGry=Strzelanka [pin: 7077, autorzy: Dominik Kobus i Piotr Dabrowski]
+nazwaGry=Zestrzel obiekty [pin: 7077, autorzy: Dominik Kobus i Piotr Dabrowski]
 # Nazwa gry powinna wyświetlac się gdzieś na planszy albo w tytule okna.
 #
 # 1. Poziomy gry i pliki opisujące poziom gry. Zawartośc pliku opisującego poziom
@@ -19,17 +19,17 @@ rozszerzeniePlikuZOpisemPoziomu=props
 #
 # 2. Stopnie trudności
 #
-liczbaStopniTrudności=4
+liczbaStopniTrudności=3
 # dodatnia liczba całkowita
-zmianaStopniaTrudności=22
+zmianaStopniaTrudności=38
 # liczba całkowita w zakresie 20..45 - o tyle procent zwiększają się i/lub zmniejszają
 # się parametry wpływające na stopień trudności np. prędkość, czas, liczba punktów do zdobycia itp.
 #
 # 3. Różne wymiary
 #
-początkowaSzerokośćPlanszy=846
-początkowaWysokośćPlanszy=653
-początkowaSzerokośćObiektuGryJakoProcentPoczątkowejSzerokościPlanszy=6.7667484
+początkowaSzerokośćPlanszy=924
+początkowaWysokośćPlanszy=539
+początkowaSzerokośćObiektuGryJakoProcentPoczątkowejSzerokościPlanszy=7.38335
 #
 # 4. Rysowanie tła i obiektów, do których się strzela
 #
@@ -42,10 +42,10 @@ figuraObiektuGry=prostokąty
 #
 #
 # 5.Wytrzymałość obiektów w sensie HP
-HitPoints =105
+HitPoints =82
 #
 #
 #
 # 6.Liczba wyświetlanych wyników w tabeli wyników
-LiczbaWynikow =39
+LiczbaWynikow =48
 #
